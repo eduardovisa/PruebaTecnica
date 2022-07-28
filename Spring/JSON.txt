@@ -1,0 +1,41 @@
+
+UTILICE LA BASE DE DATOS 'clientesdb' PARA CONSUMIR LA INFORMACIÓN.
+EL 'application.properties' LO DEJÉ COMO:
+	spring.datasource.url=jdbc:mysql://localhost:3306/clientesdb
+	spring.datasource.username = root
+	spring.datasource.password = Pa$$w0rd
+	spring.jpa.show-sql = true
+(Por si tenga que modificar algo)
+
+----------------------------------------------------------------------------
+1.- JSON PARA EL MÉTODO POST. http://localhost:8080/NutriNET/Cliente
+----------------------------------------------------------------------------
+
+{
+    "nombre": "Juan",
+    "apellidos": "Perez Hernandez", 
+    "nombre_usuario": "Jue", 
+    "correo_electronico": "jperez@hotmail.com.mx", 
+    "contrasena": "juanitoperez"
+}
+
+----------------------------------------------------------------------------
+2.- MÉTODO GET
+----------------------------------------------------------------------------
+
+Todos:
+	http://localhost:8080/NutriNET/Cliente
+
+Un elemento:
+	http://localhost:8080/NutriNET/Cliente/{id}
+
+----------------------------------------------------------------------------
+3.- JSON PARA EL MÉTODO PUT. http://localhost:8080/NutriNET/Cliente/{id}
+----------------------------------------------------------------------------
+
+{
+    "edad": 39,
+    "estatura": 1.80,
+    "peso": 60,
+    "geb": 1500
+}

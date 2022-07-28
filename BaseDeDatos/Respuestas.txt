@@ -1,0 +1,122 @@
+
+DENTRO DEL SCRIPT SE ENCUENTRA LA BASE DE DATOS CREADA JUNTO CON LOS INSERTS DE LAS TABLAS Y CADA UNO DE LOS QUERYS HACIA LAS PREGUNTAS QUE ESTÁN ABAJO.
+
+-----------------------------------------------------------------------------------------------
+1. Generar script para poblar todas las tablas.
+-----------------------------------------------------------------------------------------------
+
+-- Insert de cajeros
+INSERT INTO cajeros (Cajero, Nombre) VALUES (0, "Eduardo");
+INSERT INTO cajeros (Cajero, Nombre) VALUES (0, "Andrea");
+INSERT INTO cajeros (Cajero, Nombre) VALUES (0, "Santiago");
+INSERT INTO cajeros (Cajero, Nombre) VALUES (0, "Juan");
+
+-- Insert de maquinas_registradoras
+INSERT INTO maquinas_registradoras (Maquina, Piso) VALUES (0, "Piso muebles");
+INSERT INTO maquinas_registradoras (Maquina, Piso) VALUES (0, "Piso ropa");
+INSERT INTO maquinas_registradoras (Maquina, Piso) VALUES (0, "Piso comida");
+INSERT INTO maquinas_registradoras (Maquina, Piso) VALUES (0, "Piso tecnología");
+
+-- Insert de productos
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Cama matrimonial", 1000);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Sillón", 700);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Mesa de exterior", 300);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Silla", 100);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Playera blanca", 100);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Zapátos negros", 150);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Traje negro", 1500);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Bolso de mano", 250);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Chocolate", 25);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Manzana", 10);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Huevos", 80);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Pizza", 190);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Pollo", 70);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Smart TV", 2300);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Bocinas", 700);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Tablet", 1000);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Celular Xiaomi", 3000);
+INSERT INTO productos (Producto, Nombre, Precio) VALUES (0, "Cámara fotográfica", 1000);
+
+-- Insert de productos
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (14, 1, 4);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (16, 1, 4);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (17, 1, 4);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (7, 1, 2);
+
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (6, 2, 2);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (7, 2, 2);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (2, 2, 1);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (11, 2, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (8, 2, 2);
+
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (11, 3, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (7, 3, 2);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (1, 3, 1);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (8, 3, 2);
+
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (10, 4, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (12, 4, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (13, 4, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (11, 4, 3);
+INSERT INTO ventas (Productos_Producto, Cajeros_Cajero, Maquinas_Registradoras_Maquina) VALUES (4, 4, 1);
+
+-----------------------------------------------------------------------------------------------
+2. Mostrar el número de ventas de cada producto, ordenado de más a menos ventas.
+-----------------------------------------------------------------------------------------------
+
+SELECT productos.Nombre, COUNT(ventas.Productos_Producto) AS 'Cantidad'
+FROM ventas
+INNER JOIN productos
+WHERE ventas.Productos_Producto = productos.Producto
+GROUP BY productos.Producto
+ORDER BY COUNT(ventas.Productos_Producto) DESC;
+
+-----------------------------------------------------------------------------------------------
+3. Obtener un informe completo de ventas, indicando el nombre del cajero que realizo la venta, nombre y precios de los productos vendidos, y el piso en el que se encuentra la máquina registradora donde se realizó la venta.
+-----------------------------------------------------------------------------------------------
+
+SELECT cajeros.Nombre, productos.Nombre, productos.Precio, maquinas_registradoras.Piso
+FROM ventas
+INNER JOIN productos
+INNER JOIN cajeros
+INNER JOIN maquinas_registradoras
+WHERE ventas.Productos_Producto = productos.Producto && ventas.Cajeros_Cajero = cajeros.Cajero && ventas.Maquinas_Registradoras_Maquina = maquinas_registradoras.Maquina
+ORDER BY cajeros.Nombre ASC;
+
+-----------------------------------------------------------------------------------------------
+4. Obtener las ventas totales realizadas en cada piso.
+-----------------------------------------------------------------------------------------------
+
+SELECT maquinas_registradoras.Piso, SUM(productos.precio) AS 'Total'
+FROM ventas
+INNER JOIN productos
+INNER JOIN maquinas_registradoras
+WHERE ventas.Productos_Producto = productos.Producto && ventas.Maquinas_Registradoras_Maquina = maquinas_registradoras.Maquina
+GROUP BY maquinas_registradoras.Maquina
+ORDER BY SUM(productos.precio) DESC;
+
+-----------------------------------------------------------------------------------------------
+5. Obtener el código y nombre de cada cajero junto con el importe total de sus ventas.
+-----------------------------------------------------------------------------------------------
+
+SELECT cajeros.Cajero, cajeros.Nombre, SUM(productos.precio) AS 'Total'
+FROM ventas
+INNER JOIN productos
+INNER JOIN cajeros
+ON ventas.Productos_Producto = productos.Producto && ventas.Cajeros_Cajero = cajeros.Cajero
+GROUP BY cajeros.Cajero
+ORDER BY SUM(productos.precio) DESC;
+
+-----------------------------------------------------------------------------------------------
+6. Obtener el código y nombre de aquellos cajeros que hayan realizado ventas en pisos cuyas ventas totales sean inferiores a los 5000 pesos.
+-----------------------------------------------------------------------------------------------
+
+SELECT cajeros.Cajero, cajeros.Nombre, SUM(productos.precio) AS 'Total', maquinas_registradoras.Piso
+FROM ventas
+INNER JOIN productos
+INNER JOIN cajeros
+INNER JOIN maquinas_registradoras
+ON ventas.Productos_Producto = productos.Producto && ventas.Cajeros_Cajero = cajeros.Cajero && ventas.Maquinas_Registradoras_Maquina = maquinas_registradoras.Maquina
+GROUP BY cajeros.Cajero, maquinas_registradoras.Piso
+HAVING (SUM(productos.precio) < 5000)
+ORDER BY cajeros.Nombre ASC;
